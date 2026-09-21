@@ -81,15 +81,15 @@ function renderApp() {
         ${products.map(product => `
           <div class="product">
             <div class="product-icon">
-              \${product.emoji}
+              ${product.emoji}
             </div>
             <div class="product-info">
-              <h2>\${product.name}</h2>
+              <h2>${product.name}</h2>
               <p>
-                \${product.price.toLocaleString()} so‘m
+                ${product.price.toLocaleString()} so‘m
               </p>
             </div>
-            <button onclick="addToCart(\${product.id})">
+            <button onclick="addToCart(${product.id})">
               Sotib olish
             </button>
           </div>
