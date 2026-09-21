@@ -13,6 +13,7 @@ const products = [
 ]
 
 const tg = window.Telegram?.WebApp
+
 if (tg) {
   tg.ready()
   tg.expand()
@@ -25,7 +26,18 @@ function getCartCount() {
 }
 
 function getCartTotal() {
-  return cart.reduce((total, item) => total + item.price * item.quantity, 0)
+  return cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  )
+}
+
+function showAlert(message) {
+  if (tg) {
+    tg.showAlert(message)
+  } else {
+    alert(message)
+  }
 }
 
 function renderCart() {
@@ -36,140 +48,421 @@ function renderCart() {
       </p>
     `
   }
+
   return cart.map(item => `
     <div class="cart-item">
+
       <div class="cart-item-icon">
         ${item.emoji}
       </div>
+
       <div class="cart-item-info">
+
         <strong>
           ${item.name}
         </strong>
+
         <span>
           ${item.price.toLocaleString()} so‘m
         </span>
+
         <div class="quantity">
-          <button class="quantity-button" onclick="decreaseQuantity(${item.id})">
+
+          <button
+            class="quantity-button"
+            onclick="decreaseQuantity(${item.id})"
+          >
             −
           </button>
+
           <span>
             ${item.quantity}
           </span>
-          <button class="quantity-button" onclick="increaseQuantity(${item.id})">
+
+          <button
+            class="quantity-button"
+            onclick="increaseQuantity(${item.id})"
+          >
             +
           </button>
+
         </div>
+
       </div>
-      <button class="remove-button" onclick="removeFromCart(${item.id})">
+
+      <button
+        class="remove-button"
+        onclick="removeFromCart(${item.id})"
+      >
         ❌
       </button>
+
     </div>
   `).join('')
 }
 
-function renderApp() {
+function renderHome() {
   document.querySelector('#app').innerHTML = `
+
     <div class="shop">
+
       <div class="shop-header">
-        <h1>⭐ Telegram Stars</h1>
+        <h1>🛍️ Do‘kon</h1>
+
         <div class="cart-icon">
           🛒 <span>${getCartCount()}</span>
         </div>
       </div>
-      
-      <div class="products">
-        ${products.map(product => `
-          <div class="product">
-            <div class="product-icon">
-              ${product.emoji}
-            </div>
-            <div class="product-info">
-              <h2>${product.name}</h2>
-              <p>
-                ${product.price.toLocaleString()} so‘m
-              </p>
-            </div>
-            <button onclick="addToCart(${product.id})">
-              Sotib olish
-            </button>
-          </div>
-        `).join('')}
+
+      <div class="menu">
+
+        <button
+          class="menu-button"
+          onclick="openStars()"
+        >
+          <span class="menu-icon">⭐</span>
+          <span>Stars</span>
+        </button>
+
+        <button
+          class="menu-button"
+          onclick="openGift()"
+        >
+          <span class="menu-icon">🎁</span>
+          <span>Gift</span>
+        </button>
+
+        <button
+          class="menu-button"
+          onclick="openProducer()"
+        >
+          <span class="menu-icon">🏭</span>
+          <span>Ishlab chiqaruvchi</span>
+        </button>
+
       </div>
 
       <div class="cart">
+
         <h2>🛒 Savatcha</h2>
+
         <div>
           ${renderCart()}
         </div>
+
         <div class="cart-total">
+
           <span>Jami:</span>
+
           <strong>
             ${getCartTotal().toLocaleString()} so‘m
           </strong>
+
         </div>
-        <button class="order-button" onclick="orderCart()">
+
+        <button
+          class="order-button"
+          onclick="orderCart()"
+        >
           Buyurtma berish
         </button>
+
       </div>
+
     </div>
   `
 }
 
-// 📌 Global funksiyalarni renderApp() dan oldin e'lon qilamiz:
+function renderStars() {
+  document.querySelector('#app').innerHTML = `
+
+    <div class="shop">
+
+      <div class="shop-header">
+
+        <button
+          class="back-button"
+          onclick="goHome()"
+        >
+          ←
+        </button>
+
+        <h1>⭐ Telegram Stars</h1>
+
+        <div class="cart-icon">
+          🛒 <span>${getCartCount()}</span>
+        </div>
+
+      </div>
+
+      <div class="products">
+
+        ${products.map(product => `
+
+          <div class="product">
+
+            <div class="product-icon">
+              ${product.emoji}
+            </div>
+
+            <div class="product-info">
+
+              <h2>
+                ${product.name}
+              </h2>
+
+              <p>
+                ${product.price.toLocaleString()} so‘m
+              </p>
+
+            </div>
+
+            <button
+              onclick="addToCart(${product.id})"
+            >
+              Sotib olish
+            </button>
+
+          </div>
+
+        `).join('')}
+
+      </div>
+
+      <div class="cart">
+
+        <h2>🛒 Savatcha</h2>
+
+        <div>
+          ${renderCart()}
+        </div>
+
+        <div class="cart-total">
+
+          <span>Jami:</span>
+
+          <strong>
+            ${getCartTotal().toLocaleString()} so‘m
+          </strong>
+
+        </div>
+
+        <button
+          class="order-button"
+          onclick="orderCart()"
+        >
+          Buyurtma berish
+        </button>
+
+      </div>
+
+    </div>
+  `
+}
+
+function renderGift() {
+  document.querySelector('#app').innerHTML = `
+
+    <div class="shop">
+
+      <div class="shop-header">
+
+        <button
+          class="back-button"
+          onclick="goHome()"
+        >
+          ←
+        </button>
+
+        <h1>🎁 Gift</h1>
+
+      </div>
+
+      <div class="empty-section">
+
+        <div class="big-icon">
+          🎁
+        </div>
+
+        <h2>Gift</h2>
+
+        <p>
+          Bu bo‘lim tez orada ishga tushadi.
+        </p>
+
+      </div>
+
+    </div>
+  `
+}
+
+function renderProducer() {
+  document.querySelector('#app').innerHTML = `
+
+    <div class="shop">
+
+      <div class="shop-header">
+
+        <button
+          class="back-button"
+          onclick="goHome()"
+        >
+          ←
+        </button>
+
+        <h1>🏭 Ishlab chiqaruvchi</h1>
+
+      </div>
+
+      <div class="empty-section">
+
+        <div class="big-icon">
+          🏭
+        </div>
+
+        <h2>Ishlab chiqaruvchi</h2>
+
+        <p>
+          Bu bo‘lim tez orada ishga tushadi.
+        </p>
+
+      </div>
+
+    </div>
+  `
+}
+
+window.openStars = function () {
+  renderStars()
+}
+
+window.openGift = function () {
+  renderGift()
+}
+
+window.openProducer = function () {
+  renderProducer()
+}
+
+window.goHome = function () {
+  renderHome()
+}
+
 window.addToCart = function (id) {
-  const product = products.find(p => p.id === id)
-  const existingProduct = cart.find(item => item.id === id)
+
+  const product = products.find(
+    product => product.id === id
+  )
+
+  if (!product) return
+
+  const existingProduct = cart.find(
+    item => item.id === id
+  )
 
   if (existingProduct) {
+
     existingProduct.quantity++
+
   } else {
-    cart.push({ ...product, quantity: 1 })
+
+    cart.push({
+      ...product,
+      quantity: 1
+    })
+
   }
-  renderApp()
+
+  renderStars()
 }
 
 window.increaseQuantity = function (id) {
-  const item = cart.find(item => item.id === id)
+
+  const item = cart.find(
+    item => item.id === id
+  )
+
   if (item) {
     item.quantity++
   }
-  renderApp()
+
+  renderStars()
 }
 
 window.decreaseQuantity = function (id) {
-  const item = cart.find(item => item.id === id)
+
+  const item = cart.find(
+    item => item.id === id
+  )
+
   if (!item) return
 
   if (item.quantity > 1) {
+
     item.quantity--
+
   } else {
-    cart = cart.filter(product => product.id !== id)
+
+    cart = cart.filter(
+      product => product.id !== id
+    )
+
   }
-  renderApp()
+
+  renderStars()
 }
 
 window.removeFromCart = function (id) {
-  cart = cart.filter(item => item.id !== id)
-  renderApp()
+
+  cart = cart.filter(
+    item => item.id !== id
+  )
+
+  renderStars()
 }
 
 window.orderCart = function () {
+
   if (cart.length === 0) {
-    if (tg) {
-      tg.showAlert('Savatcha bo‘sh!')
-    } else {
-      alert('Savatcha bo‘sh!')
-    }
+
+    showAlert('Savatcha bo‘sh!')
+
     return
+
   }
 
-  const message = `Buyurtma summasi: ${getCartTotal().toLocaleString()} so‘m`
-  if (tg) {
-    tg.showAlert(message)
-  } else {
-    alert(message)
-  }
+  const total = getCartTotal().toLocaleString()
+
+  showAlert(
+    `Buyurtma summasi: ${total} so‘m`
+  )
 }
 
-// 🚀 Eng oxirida ilovani ishga tushiramiz
-renderApp()
+function startApp() {
+
+  document.querySelector('#app').innerHTML = `
+
+    <div class="loading">
+
+      <div class="loading-icon">
+        ⭐
+      </div>
+
+      <h1>Do‘kon yuklanmoqda...</h1>
+
+      <p>
+        Bir oz kuting
+      </p>
+
+    </div>
+
+  `
+
+  setTimeout(() => {
+
+    renderHome()
+
+  }, 1200)
+}
+
+startApp()
