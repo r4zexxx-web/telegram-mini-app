@@ -108,10 +108,6 @@ function renderHome() {
 
       <div class="shop-header">
         <h1>🛍️ Do‘kon</h1>
-
-        <div class="cart-icon">
-          🛒 <span>${getCartCount()}</span>
-        </div>
       </div>
 
       <div class="menu">
@@ -138,33 +134,6 @@ function renderHome() {
         >
           <span class="menu-icon">🏭</span>
           <span>Ishlab chiqaruvchi</span>
-        </button>
-
-      </div>
-
-      <div class="cart">
-
-        <h2>🛒 Savatcha</h2>
-
-        <div>
-          ${renderCart()}
-        </div>
-
-        <div class="cart-total">
-
-          <span>Jami:</span>
-
-          <strong>
-            ${getCartTotal().toLocaleString()} so‘m
-          </strong>
-
-        </div>
-
-        <button
-          class="order-button"
-          onclick="orderCart()"
-        >
-          Buyurtma berish
         </button>
 
       </div>
@@ -361,16 +330,12 @@ window.addToCart = function (id) {
   )
 
   if (existingProduct) {
-
     existingProduct.quantity++
-
   } else {
-
     cart.push({
       ...product,
       quantity: 1
     })
-
   }
 
   renderStars()
@@ -398,15 +363,11 @@ window.decreaseQuantity = function (id) {
   if (!item) return
 
   if (item.quantity > 1) {
-
     item.quantity--
-
   } else {
-
     cart = cart.filter(
       product => product.id !== id
     )
-
   }
 
   renderStars()
@@ -424,11 +385,8 @@ window.removeFromCart = function (id) {
 window.orderCart = function () {
 
   if (cart.length === 0) {
-
     showAlert('Savatcha bo‘sh!')
-
     return
-
   }
 
   const total = getCartTotal().toLocaleString()
@@ -459,9 +417,7 @@ function startApp() {
   `
 
   setTimeout(() => {
-
     renderHome()
-
   }, 1200)
 }
 
