@@ -104,41 +104,40 @@ function renderCart() {
 function renderHome() {
   document.querySelector('#app').innerHTML = `
 
-    <div class="shop">
+    <div class="home">
 
-      <div class="shop-header">
-        <h1>🛍️ Do‘kon</h1>
-      </div>
+      <h1 class="home-title">🛍️ DO‘KON</h1>
 
-      <div class="menu">
+      <div class="home-menu">
 
         <button
-          class="menu-button"
+          class="big-menu-button stars-menu"
           onclick="openStars()"
         >
-          <span class="menu-icon">⭐</span>
-          <span>Stars</span>
+          <span class="big-menu-icon">⭐</span>
+          <span class="big-menu-text">STARS</span>
         </button>
 
         <button
-          class="menu-button"
+          class="big-menu-button gift-menu"
           onclick="openGift()"
         >
-          <span class="menu-icon">🎁</span>
-          <span>Gift</span>
+          <span class="big-menu-icon">🎁</span>
+          <span class="big-menu-text">GIFT</span>
         </button>
 
         <button
-          class="menu-button"
+          class="big-menu-button producer-menu"
           onclick="openProducer()"
         >
-          <span class="menu-icon">🏭</span>
-          <span>Ishlab chiqaruvchi</span>
+          <span class="big-menu-icon">🏭</span>
+          <span class="big-menu-text">ISHLAB CHIQARUVCHI</span>
         </button>
 
       </div>
 
     </div>
+
   `
 }
 
@@ -283,22 +282,67 @@ function renderProducer() {
 
       </div>
 
-      <div class="empty-section">
+      <div class="producer-form">
 
-        <div class="big-icon">
-          🏭
-        </div>
-
-        <h2>Ishlab chiqaruvchi</h2>
+        <h2>👤 Ma’lumotlaringiz</h2>
 
         <p>
-          Bu bo‘lim tez orada ishga tushadi.
+          Buyurtma uchun ma’lumotlaringizni kiriting.
         </p>
+
+        <input
+          type="text"
+          id="firstName"
+          placeholder="Ismingiz"
+        >
+
+        <input
+          type="text"
+          id="lastName"
+          placeholder="Familiyangiz"
+        >
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Telefon raqamingiz"
+        >
+
+        <button
+          class="save-button"
+          onclick="saveProducerInfo()"
+        >
+          💾 Saqlash
+        </button>
 
       </div>
 
     </div>
+
   `
+}
+
+window.saveProducerInfo = function () {
+
+  const firstName = document.querySelector('#MUHAMMADJON').value.trim()
+  const lastName = document.querySelector('#SHERALIYEV').value.trim()
+  const phone = document.querySelector('#+998959334333').value.trim()
+
+  if (!firstName || !lastName || !phone) {
+    showAlert('Iltimos, barcha maydonlarni to‘ldiring!')
+    return
+  }
+
+  localStorage.setItem(
+    'producerInfo',
+    JSON.stringify({
+      firstName,
+      lastName,
+      phone
+    })
+  )
+
+  showAlert('Ma’lumotlar saqlandi ✅')
 }
 
 window.openStars = function () {
