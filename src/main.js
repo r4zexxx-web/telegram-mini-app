@@ -246,22 +246,120 @@ function renderGift() {
 
       </div>
 
-      <div class="empty-section">
+      <div class="gift-grid" id="gift-grid">
 
-        <div class="big-icon">
-          🎁
+        <div class="gift-loading">
+          <div class="gift-loading-icon">🎁</div>
+          <p>Giftlar yuklanmoqda...</p>
         </div>
-
-        <h2>Gift</h2>
-
-        <p>
-          Bu bo‘lim tez orada ishga tushadi.
-        </p>
 
       </div>
 
     </div>
+
   `
+
+  loadGifts()
+}
+
+
+async function loadGifts() {
+
+  const giftGrid = document.querySelector('#gift-grid')
+
+  try {
+
+    const response = await fetch('/api/gifts')
+
+    if (!response.ok) {
+      throw new Error('Giftlarni olishda xato')
+    }
+
+    const gifts = await response.json()
+
+    if (!gifts.length) {
+      giftGrid.innerHTML = `
+        <div class="gift-loading">
+          <div class="gift-loading-icon">🎁</div>
+          <p>Hozircha Gift mavjud emas</p>
+        </div>
+      `
+      return
+    }
+
+    giftGrid.innerHTML = gifts
+      .slice(0, 20)
+      .map((gift) => `
+
+        <div class="gift-card">
+
+          <div class="gift-image-box">
+
+            <img
+              class="gift-image"
+              src="${gift.image}"
+              alt="${gift.name}"
+            >
+
+          </div>
+
+          <div class="gift-info">
+
+            <h3>${gift.name}</h3>
+
+            <div class="gift-price">
+              ${Number(gift.price).toLocaleString('uz-UZ')} so‘m
+            </div>
+
+            <button
+              class="gift-buy-button"
+              onclick="buyGift(${gift.id})"
+            >
+              Sotib olish
+            </button>
+
+          </div>
+
+        </div>
+
+      `)
+      .join('')
+
+  } catch (error) {
+
+    console.error(error)
+
+    giftGrid.innerHTML = `
+
+      <div class="gift-loading">
+
+        <div class="gift-loading-icon">⚠️</div>
+
+        <h3>Giftlarni yuklab bo‘lmadi</h3>
+
+        <p>Keyinroq qayta urinib ko‘ring</p>
+
+      </div>
+
+    `
+  }
+}
+
+
+window.buyGift = function(id) {
+
+  const tg = window.Telegram?.WebApp
+
+  if (tg) {
+    tg.showAlert(
+      'Gift sotib olish funksiyasi tez orada ulanadi.'
+    )
+  } else {
+    alert(
+      'Gift sotib olish funksiyasi tez orada ulanadi.'
+    )
+  }
+
 }
 
 function renderProducer() {
