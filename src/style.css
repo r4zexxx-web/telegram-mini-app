@@ -283,3 +283,81 @@ body {
   font-weight: 800;
   letter-spacing: 0.5px;
 }
+/* =========================
+   ISHLAB CHIQARUVCHI
+========================= */
+
+.contact-section {
+  margin-top: 25px;
+  padding: 28px 20px;
+  border-radius: 24px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.contact-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #f3f3f3;
+
+  font-size: 48px;
+}
+
+.contact-section h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.contact-description {
+  margin: 8px 0 25px;
+  font-size: 15px;
+  opacity: 0.55;
+}
+
+/* Kontakt tugmalari */
+
+.contact-button {
+  width: 100%;
+  min-height: 58px;
+  margin-top: 12px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border-radius: 15px;
+  border: none;
+
+  background: #f5f5f5;
+  color: #111;
+
+  text-decoration: none;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.contact-button:active {
+  transform: scale(0.97);
+  opacity: 0.8;
+}
+
+.contact-button span {
+  font-size: 25px;
+}

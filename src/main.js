@@ -282,38 +282,45 @@ function renderProducer() {
 
       </div>
 
-      <div class="producer-form">
+      <div class="contact-section">
 
-        <h2>👤 Ma’lumotlaringiz</h2>
+        <div class="contact-icon">
+          🏭
+        </div>
 
-        <p>
-          Buyurtma uchun ma’lumotlaringizni kiriting.
+        <h2>SHERALIYEV MUHAMMADJON</h2>
+
+        <p class="contact-description">
+          Biz bilan bog‘laning
         </p>
 
-        <input
-          type="text"
-          id="firstName"
-          placeholder="Ismingiz"
+        <a
+          class="contact-button"
+          href="https://t.me/MU4AMMADJON"
+          target="_blank"
+          rel="noopener noreferrer"
         >
+          <span>✈️</span>
+          Telegram
+        </a>
 
-        <input
-          type="text"
-          id="lastName"
-          placeholder="Familiyangiz"
+        <a
+          class="contact-button"
+          href="https://www.instagram.com/RON_CBR/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
+          <span>📸</span>
+          Instagram
+        </a>
 
-        <input
-          type="tel"
-          id="phone"
-          placeholder="Telefon raqamingiz"
+        <a
+          class="contact-button"
+          href="tel:+998959334333"
         >
-
-        <button
-          class="save-button"
-          onclick="saveProducerInfo()"
-        >
-          💾 Saqlash
-        </button>
+          <span>📞</span>
+          +998 95 933 43 33
+        </a>
 
       </div>
 
