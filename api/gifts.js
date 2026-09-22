@@ -23,21 +23,20 @@ export default async function handler(req, res) {
     const gifts = data.result.gifts
       .slice()
       .sort((a, b) => a.star_count - b.star_count)
-
-    const selected = gifts
-      .filter(gift => gift.star_count * 240 >= 50000)
       .slice(0, 20)
+      .map((gift, index) => ({
+        id: index + 1,
+        telegramGiftId: gift.id,
+        name: gift.sticker?.emoji || `🎁 Gift ${index + 1}`,
+        stars: gift.star_count,
+        price: Math.max(
+          50000,
+          Math.ceil((gift.star_count * 240) / 1000) * 1000
+        ),
+        fileId: gift.sticker?.file_id || ''
+      }))
 
-    const result = selected.map((gift, index) => ({
-      id: index + 1,
-      telegramGiftId: gift.id,
-      name: gift.sticker?.emoji || `Gift ${index + 1}`,
-      stars: gift.star_count,
-      price: Math.ceil((gift.star_count * 240) / 1000) * 1000,
-      fileId: gift.sticker?.file_id || ''
-    }))
-
-    return res.status(200).json(result)
+    return res.status(200).json(gifts)
 
   } catch (error) {
     console.error(error)
