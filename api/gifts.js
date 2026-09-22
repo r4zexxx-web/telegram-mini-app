@@ -8,15 +8,18 @@ export default async function handler(req, res) {
       })
     }
 
-    const response = await fetch(
+    const telegramResponse = await fetch(
       `https://api.telegram.org/bot${botToken}/getAvailableGifts`
     )
 
-    const data = await response.json()
+    const data = await telegramResponse.json()
 
     if (!data.ok) {
+      console.error('Telegram error:', data)
+
       return res.status(500).json({
-        error: 'Telegram Giftlarni qaytarmadi'
+        error: 'Telegram Giftlarni qaytarmadi',
+        telegramError: data.description
       })
     }
 
@@ -28,29 +31,32 @@ export default async function handler(req, res) {
 
         const stars = gift.star_count
 
-        // 15 Stars = 4 000 so'm
-        // Har bir Star uchun taxminan 267 so'm
-        const price = Math.ceil(
-          (stars * 4000) / 15 / 1000
-        ) * 1000
+        const price =
+          Math.ceil((stars * 4000) / 15 / 1000) * 1000
+
+        const sticker = gift.sticker
+
+        let imageFileId = ''
+
+        if (sticker?.thumbnail?.file_id) {
+          imageFileId = sticker.thumbnail.file_id
+        } else if (sticker?.file_id) {
+          imageFileId = sticker.file_id
+        }
 
         return {
           id: index + 1,
-
           telegramGiftId: gift.id,
 
           name:
-            gift.sticker?.emoji ||
-            `🎁 Gift ${index + 1}`,
+            sticker?.emoji ||
+            `Gift ${index + 1}`,
 
           stars: stars,
 
           price: price,
 
-          fileId:
-            gift.sticker?.thumbnail?.file_id ||
-            gift.sticker?.file_id ||
-            ''
+          imageFileId: imageFileId
         }
       })
 
@@ -58,10 +64,11 @@ export default async function handler(req, res) {
 
   } catch (error) {
 
-    console.error(error)
+    console.error('Gifts error:', error)
 
     return res.status(500).json({
-      error: 'Server xatosi'
+      error: 'Server xatosi',
+      message: error.message
     })
   }
 }

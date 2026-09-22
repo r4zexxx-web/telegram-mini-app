@@ -242,7 +242,7 @@ function renderGift() {
           ←
         </button>
 
-        <h1>🎁 Gift</h1>
+        <h1>🎁 Telegram Gifts</h1>
 
       </div>
 
@@ -264,12 +264,12 @@ function renderGift() {
 
 
 async function loadGifts() {
-
   const giftGrid = document.querySelector('#gift-grid')
 
   try {
-
-    const response = await fetch('/api/gifts')
+    const response = await fetch(
+  'https://telegram-mini-app-five-sable.vercel.app/api/gifts'
+)
 
     if (!response.ok) {
       throw new Error('Giftlarni olishda xato')
@@ -287,25 +287,40 @@ async function loadGifts() {
       return
     }
 
-    giftGrid.innerHTML = gifts
-      .slice(0, 20)
-      .map((gift) => `
+    giftGrid.innerHTML = gifts.map((gift) => {
+      const imageUrl = gift.imageFileId
+        ? `/api/gift-image?file_id=${encodeURIComponent(gift.imageFileId)}`
+        : ''
 
+      return `
         <div class="gift-card">
 
           <div class="gift-image-box">
-
-            <img
-  class="gift-image"
-  src="/api/gift-image?file_id=${encodeURIComponent(gift.fileId)}"
-  alt="${gift.name}"
->
-
+            ${
+              imageUrl
+                ? `
+                  <img
+                    class="gift-image"
+                    src="${imageUrl}"
+                    alt="${gift.name}"
+                    loading="lazy"
+                  >
+                `
+                : `
+                  <div class="gift-image-fallback">
+                    🎁
+                  </div>
+                `
+            }
           </div>
 
           <div class="gift-info">
 
             <h3>${gift.name}</h3>
+
+            <div class="gift-stars">
+              ⭐ ${gift.stars} Stars
+            </div>
 
             <div class="gift-price">
               ${Number(gift.price).toLocaleString('uz-UZ')} so‘m
@@ -321,30 +336,21 @@ async function loadGifts() {
           </div>
 
         </div>
-
-      `)
-      .join('')
+      `
+    }).join('')
 
   } catch (error) {
-
-    console.error(error)
+    console.error('Gift xatosi:', error)
 
     giftGrid.innerHTML = `
-
       <div class="gift-loading">
-
         <div class="gift-loading-icon">⚠️</div>
-
         <h3>Giftlarni yuklab bo‘lmadi</h3>
-
         <p>Keyinroq qayta urinib ko‘ring</p>
-
       </div>
-
     `
   }
 }
-
 
 window.buyGift = function(id) {
 

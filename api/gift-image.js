@@ -1,56 +1,63 @@
 export default async function handler(req, res) {
   try {
     const botToken = process.env.BOT_TOKEN
+    const fileId = req.query.file_id
 
     if (!botToken) {
-      return res.status(500).json({
-        error: 'BOT_TOKEN topilmadi'
-      })
+      return res.status(500).send('BOT_TOKEN topilmadi')
     }
 
-    const response = await fetch(
-      `https://api.telegram.org/bot${botToken}/getAvailableGifts`
+    if (!fileId) {
+      return res.status(400).send('file_id kerak')
+    }
+
+    const telegramUrl =
+      `https://api.telegram.org/bot${botToken}/getFile?file_id=${encodeURIComponent(fileId)}`
+
+    const fileInfoResponse = await fetch(telegramUrl)
+    const fileInfo = await fileInfoResponse.json()
+
+    console.log('FILE INFO:', fileInfo)
+
+    if (!fileInfo.ok) {
+      return res.status(500).send(
+        JSON.stringify(fileInfo)
+      )
+    }
+
+    const filePath = fileInfo.result.file_path
+
+    const imageResponse = await fetch(
+      `https://api.telegram.org/file/bot${botToken}/${filePath}`
     )
 
-    const data = await response.json()
-
-    if (!data.ok) {
-      return res.status(500).json({
-        error: 'Telegram Giftlarni qaytarmadi'
-      })
+    if (!imageResponse.ok) {
+      return res.status(500).send(
+        'Telegramdan faylni yuklab bo‘lmadi'
+      )
     }
 
-    const gifts = data.result.gifts
-      .slice()
-      .sort((a, b) => a.star_count - b.star_count)
-      .slice(0, 20)
-      .map((gift, index) => ({
-        id: index + 1,
+    const contentType =
+      imageResponse.headers.get('content-type') ||
+      'application/octet-stream'
 
-        telegramGiftId: gift.id,
+    const buffer = Buffer.from(
+      await imageResponse.arrayBuffer()
+    )
 
-        name: gift.sticker?.emoji || `🎁 Gift ${index + 1}`,
+    res.setHeader('Content-Type', contentType)
+    res.setHeader(
+      'Cache-Control',
+      'public, max-age=86400'
+    )
 
-        stars: gift.star_count,
-
-        price: Math.max(
-          50000,
-          Math.ceil((gift.star_count * 240) / 1000) * 1000
-        ),
-
-        fileId:
-          gift.sticker?.thumbnail?.file_id ||
-          gift.sticker?.file_id ||
-          ''
-      }))
-
-    return res.status(200).json(gifts)
+    return res.status(200).send(buffer)
 
   } catch (error) {
-    console.error(error)
+    console.error('GIFT IMAGE ERROR:', error)
 
-    return res.status(500).json({
-      error: 'Server xatosi'
-    })
+    return res.status(500).send(
+      error.message
+    )
   }
 }
