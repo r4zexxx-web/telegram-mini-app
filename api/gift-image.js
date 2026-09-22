@@ -1,52 +1,56 @@
 export default async function handler(req, res) {
   try {
     const botToken = process.env.BOT_TOKEN
-    const fileId = req.query.file_id
 
     if (!botToken) {
-      return res.status(500).send('BOT_TOKEN topilmadi')
+      return res.status(500).json({
+        error: 'BOT_TOKEN topilmadi'
+      })
     }
 
-    if (!fileId) {
-      return res.status(400).send('file_id kerak')
-    }
-
-    const fileInfoResponse = await fetch(
-      `https://api.telegram.org/bot${botToken}/getFile?file_id=${encodeURIComponent(fileId)}`
+    const response = await fetch(
+      `https://api.telegram.org/bot${botToken}/getAvailableGifts`
     )
 
-    const fileInfo = await fileInfoResponse.json()
+    const data = await response.json()
 
-    if (!fileInfo.ok) {
-      console.error(fileInfo)
-      return res.status(500).send('Telegram faylni topmadi')
+    if (!data.ok) {
+      return res.status(500).json({
+        error: 'Telegram Giftlarni qaytarmadi'
+      })
     }
 
-    const filePath = fileInfo.result.file_path
+    const gifts = data.result.gifts
+      .slice()
+      .sort((a, b) => a.star_count - b.star_count)
+      .slice(0, 20)
+      .map((gift, index) => ({
+        id: index + 1,
 
-    const imageResponse = await fetch(
-      `https://api.telegram.org/file/bot${botToken}/${filePath}`
-    )
+        telegramGiftId: gift.id,
 
-    if (!imageResponse.ok) {
-      return res.status(500).send('Rasmni yuklab bo‘lmadi')
-    }
+        name: gift.sticker?.emoji || `🎁 Gift ${index + 1}`,
 
-    const contentType =
-      imageResponse.headers.get('content-type') || 'image/webp'
+        stars: gift.star_count,
 
-    const imageBuffer = Buffer.from(
-      await imageResponse.arrayBuffer()
-    )
+        price: Math.max(
+          50000,
+          Math.ceil((gift.star_count * 240) / 1000) * 1000
+        ),
 
-    res.setHeader('Content-Type', contentType)
-    res.setHeader('Cache-Control', 'public, max-age=3600')
+        fileId:
+          gift.sticker?.thumbnail?.file_id ||
+          gift.sticker?.file_id ||
+          ''
+      }))
 
-    return res.status(200).send(imageBuffer)
+    return res.status(200).json(gifts)
 
   } catch (error) {
     console.error(error)
 
-    return res.status(500).send('Server xatosi')
+    return res.status(500).json({
+      error: 'Server xatosi'
+    })
   }
 }
