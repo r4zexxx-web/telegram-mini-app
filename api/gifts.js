@@ -33,15 +33,15 @@ export default async function handler(req, res) {
 
         // 15 Stars = 4 000 so'm
         const price =
-          Math.ceil((stars * 4000 / 15) / 1000) * 1000
+          Math.ceil(
+            (stars * 4000 / 15) / 1000
+          ) * 1000
 
         const sticker = gift.sticker || {}
 
-        // Eng yaxshi variant — Telegram bergan thumbnail
+        // Faqat oddiy thumbnail rasmini olamiz
         const imageFileId =
-          sticker.thumbnail?.file_id ||
-          sticker.file_id ||
-          ''
+          sticker.thumbnail?.file_id || ''
 
         return {
           id: index + 1,
@@ -59,8 +59,13 @@ export default async function handler(req, res) {
           imageFileId,
 
           stickerType: {
-            animated: Boolean(sticker.is_animated),
-            video: Boolean(sticker.is_video)
+            animated: Boolean(
+              sticker.is_animated
+            ),
+
+            video: Boolean(
+              sticker.is_video
+            )
           }
         }
       })
@@ -69,7 +74,10 @@ export default async function handler(req, res) {
 
   } catch (error) {
 
-    console.error('Gifts error:', error)
+    console.error(
+      'Gifts error:',
+      error
+    )
 
     return res.status(500).json({
       error: 'Server xatosi',
