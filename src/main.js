@@ -296,10 +296,10 @@ async function loadGifts() {
           <div class="gift-image-box">
 
             <img
-              class="gift-image"
-              src="/api/gift-image?file_id=${encodeURIComponent(gift.fileId)}"
-              alt="${gift.name}"
-            >
+  class="gift-image"
+  src="/api/gift-image?file_id=${encodeURIComponent(gift.fileId)}"
+  alt="${gift.name}"
+>
 
           </div>
 
