@@ -29,34 +29,39 @@ export default async function handler(req, res) {
       .slice(0, 20)
       .map((gift, index) => {
 
-        const stars = gift.star_count
+        const stars = Number(gift.star_count || 0)
 
+        // 15 Stars = 4 000 so'm
         const price =
-          Math.ceil((stars * 4000) / 15 / 1000) * 1000
+          Math.ceil((stars * 4000 / 15) / 1000) * 1000
 
-        const sticker = gift.sticker
+        const sticker = gift.sticker || {}
 
-        let imageFileId = ''
-
-        if (sticker?.thumbnail?.file_id) {
-          imageFileId = sticker.thumbnail.file_id
-        } else if (sticker?.file_id) {
-          imageFileId = sticker.file_id
-        }
+        // Eng yaxshi variant — Telegram bergan thumbnail
+        const imageFileId =
+          sticker.thumbnail?.file_id ||
+          sticker.file_id ||
+          ''
 
         return {
           id: index + 1,
+
           telegramGiftId: gift.id,
 
           name:
-            sticker?.emoji ||
+            sticker.emoji ||
             `Gift ${index + 1}`,
 
-          stars: stars,
+          stars,
 
-          price: price,
+          price,
 
-          imageFileId: imageFileId
+          imageFileId,
+
+          stickerType: {
+            animated: Boolean(sticker.is_animated),
+            video: Boolean(sticker.is_video)
+          }
         }
       })
 

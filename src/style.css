@@ -358,111 +358,20 @@ body {
   opacity: 0.8;
 }
 
-.contact-button span {
-  font-size: 25px;
-}
-.gift-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.gift-card {
-  background: white;
-  border-radius: 20px;
-  padding: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
-.gift-image-box {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  background: #f5f5f5;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-}
-
-.gift-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.gift-info {
-  padding: 10px 2px 2px;
-}
-
-.gift-info h3 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.gift-price {
-  margin-top: 7px;
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.gift-buy-button {
-  width: 100%;
-  margin-top: 10px;
-  min-height: 42px;
-
-  border: none;
-  border-radius: 12px;
-
-  background: #111;
-  color: white;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.gift-buy-button:active {
-  transform: scale(0.97);
-}
-
-.gift-loading {
-  grid-column: 1 / -1;
-
-  min-height: 300px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-  opacity: 0.7;
-}
-
-.gift-loading-icon {
-  font-size: 65px;
-  margin-bottom: 15px;
-}
 .gift-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin-top: 20px;
+  padding-bottom: 30px;
 }
 
 .gift-card {
-  background: white;
+  background: #fff;
   border-radius: 20px;
   padding: 10px;
-  box-sizing: border-box;
   overflow: hidden;
+  box-sizing: border-box;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -470,8 +379,9 @@ body {
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 16px;
-  background: #f5f5f5;
   overflow: hidden;
+  background: #f5f5f5;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -498,21 +408,18 @@ body {
 
 .gift-info h3 {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .gift-stars {
-  margin-top: 5px;
+  margin-top: 6px;
   font-size: 13px;
   opacity: 0.65;
 }
 
 .gift-price {
-  margin-top: 6px;
+  margin-top: 7px;
   font-size: 16px;
   font-weight: 800;
 }
@@ -521,12 +428,16 @@ body {
   width: 100%;
   min-height: 42px;
   margin-top: 10px;
+
   border: none;
   border-radius: 12px;
+
   background: #111;
-  color: white;
+  color: #fff;
+
   font-size: 14px;
   font-weight: 700;
+
   cursor: pointer;
 }
 
@@ -536,12 +447,16 @@ body {
 
 .gift-loading {
   grid-column: 1 / -1;
+
   min-height: 300px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   text-align: center;
+
   opacity: 0.7;
 }
 

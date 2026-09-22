@@ -246,11 +246,21 @@ function renderGift() {
 
       </div>
 
-      <div class="gift-grid" id="gift-grid">
+      <div
+        class="gift-grid"
+        id="gift-grid"
+      >
 
         <div class="gift-loading">
-          <div class="gift-loading-icon">🎁</div>
-          <p>Giftlar yuklanmoqda...</p>
+
+          <div class="gift-loading-icon">
+            🎁
+          </div>
+
+          <p>
+            Giftlar yuklanmoqda...
+          </p>
+
         </div>
 
       </div>
@@ -264,91 +274,185 @@ function renderGift() {
 
 
 async function loadGifts() {
-  const giftGrid = document.querySelector('#gift-grid')
+
+  const giftGrid =
+    document.querySelector('#gift-grid')
 
   try {
+
     const response = await fetch(
-  'https://telegram-mini-app-five-sable.vercel.app/api/gifts'
-)
+      'https://telegram-mini-app-five-sable.vercel.app/api/gifts',
+      {
+        cache: 'no-store'
+      }
+    )
 
     if (!response.ok) {
-      throw new Error('Giftlarni olishda xato')
+      throw new Error(
+        'Gift API ishlamadi'
+      )
     }
 
-    const gifts = await response.json()
+    const gifts =
+      await response.json()
 
-    if (!gifts.length) {
+    if (!Array.isArray(gifts) || gifts.length === 0) {
+
       giftGrid.innerHTML = `
+
         <div class="gift-loading">
-          <div class="gift-loading-icon">🎁</div>
-          <p>Hozircha Gift mavjud emas</p>
+
+          <div class="gift-loading-icon">
+            🎁
+          </div>
+
+          <p>
+            Hozircha Gift mavjud emas
+          </p>
+
         </div>
+
       `
+
       return
     }
 
-    giftGrid.innerHTML = gifts.map((gift) => {
-      const imageUrl = gift.imageFileId
-        ? `/api/gift-image?file_id=${encodeURIComponent(gift.imageFileId)}`
-        : ''
 
-      return `
-        <div class="gift-card">
+    giftGrid.innerHTML = gifts.map(
+      (gift) => {
 
-          <div class="gift-image-box">
-            ${
-              imageUrl
+        const imageUrl =
+          gift.imageFileId
+            ? `https://telegram-mini-app-five-sable.vercel.app/api/gift-image?file_id=${encodeURIComponent(gift.imageFileId)}`
+            : ''
+
+
+        const price =
+          Number(gift.price || 0)
+            .toLocaleString('uz-UZ')
+
+
+        return `
+
+          <div class="gift-card">
+
+            <div class="gift-image-box">
+
+              ${
+                imageUrl
+
                 ? `
+
                   <img
                     class="gift-image"
                     src="${imageUrl}"
                     alt="${gift.name}"
                     loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                   >
+
+                  <div
+                    class="gift-image-fallback"
+                    style="display:none;"
+                  >
+                    🎁
+                  </div>
+
                 `
+
                 : `
+
                   <div class="gift-image-fallback">
                     🎁
                   </div>
+
                 `
-            }
-          </div>
+              }
 
-          <div class="gift-info">
-
-            <h3>${gift.name}</h3>
-
-            <div class="gift-stars">
-              ⭐ ${gift.stars} Stars
             </div>
 
-            <div class="gift-price">
-              ${Number(gift.price).toLocaleString('uz-UZ')} so‘m
-            </div>
 
-            <button
-              class="gift-buy-button"
-              onclick="buyGift(${gift.id})"
-            >
-              Sotib olish
-            </button>
+            <div class="gift-info">
+
+              <h3>
+                ${gift.name}
+              </h3>
+
+
+              <div class="gift-stars">
+                ⭐ ${gift.stars} Stars
+              </div>
+
+
+              <div class="gift-price">
+                ${price} so‘m
+              </div>
+
+
+              <button
+                class="gift-buy-button"
+                onclick="buyGift(${gift.id})"
+              >
+                Sotib olish
+              </button>
+
+            </div>
 
           </div>
 
-        </div>
-      `
-    }).join('')
+        `
+      }
+    ).join('')
+
 
   } catch (error) {
-    console.error('Gift xatosi:', error)
+
+    console.error(
+      'Gift xatosi:',
+      error
+    )
+
 
     giftGrid.innerHTML = `
+
       <div class="gift-loading">
-        <div class="gift-loading-icon">⚠️</div>
-        <h3>Giftlarni yuklab bo‘lmadi</h3>
-        <p>Keyinroq qayta urinib ko‘ring</p>
+
+        <div class="gift-loading-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Giftlarni yuklab bo‘lmadi
+        </h3>
+
+        <p>
+          Keyinroq qayta urinib ko‘ring
+        </p>
+
       </div>
+
     `
+  }
+}
+
+
+window.buyGift = function(id) {
+
+  const tg =
+    window.Telegram?.WebApp
+
+  if (tg) {
+
+    tg.showAlert(
+      'Gift sotib olish funksiyasi tez orada ulanadi.'
+    )
+
+  } else {
+
+    alert(
+      'Gift sotib olish funksiyasi tez orada ulanadi.'
+    )
+
   }
 }
 

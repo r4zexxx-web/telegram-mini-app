@@ -11,53 +11,95 @@ export default async function handler(req, res) {
       return res.status(400).send('file_id kerak')
     }
 
-    const telegramUrl =
+    // Telegramdan fayl ma'lumotini olish
+    const fileInfoResponse = await fetch(
       `https://api.telegram.org/bot${botToken}/getFile?file_id=${encodeURIComponent(fileId)}`
+    )
 
-    const fileInfoResponse = await fetch(telegramUrl)
     const fileInfo = await fileInfoResponse.json()
 
-    console.log('FILE INFO:', fileInfo)
-
     if (!fileInfo.ok) {
+      console.error('getFile error:', fileInfo)
+
       return res.status(500).send(
-        JSON.stringify(fileInfo)
+        `Telegram getFile xatosi: ${fileInfo.description || 'Nomaʼlum xato'}`
       )
     }
 
-    const filePath = fileInfo.result.file_path
+    const filePath = fileInfo.result?.file_path
 
-    const imageResponse = await fetch(
+    if (!filePath) {
+      return res.status(500).send(
+        'Telegram file_path qaytarmadi'
+      )
+    }
+
+    // Faylni Telegram serveridan olish
+    const telegramFileUrl =
       `https://api.telegram.org/file/bot${botToken}/${filePath}`
-    )
+
+    const imageResponse = await fetch(telegramFileUrl)
 
     if (!imageResponse.ok) {
       return res.status(500).send(
-        'Telegramdan faylni yuklab bo‘lmadi'
+        'Telegramdan rasmni yuklab bo‘lmadi'
       )
     }
-
-    const contentType =
-      imageResponse.headers.get('content-type') ||
-      'application/octet-stream'
 
     const buffer = Buffer.from(
       await imageResponse.arrayBuffer()
     )
 
-    res.setHeader('Content-Type', contentType)
+    // Telegram baʼzan MIME type bermaydi.
+    // Shuning uchun file_path extension orqali aniqlaymiz.
+    const lowerPath = filePath.toLowerCase()
+
+    let contentType = 'application/octet-stream'
+
+    if (lowerPath.endsWith('.webp')) {
+      contentType = 'image/webp'
+    } else if (lowerPath.endsWith('.jpg') || lowerPath.endsWith('.jpeg')) {
+      contentType = 'image/jpeg'
+    } else if (lowerPath.endsWith('.png')) {
+      contentType = 'image/png'
+    } else if (lowerPath.endsWith('.gif')) {
+      contentType = 'image/gif'
+    } else if (lowerPath.endsWith('.webm')) {
+      contentType = 'video/webm'
+    } else if (lowerPath.endsWith('.tgs')) {
+      contentType = 'application/x-tgsticker'
+    }
+
+    // Agar Telegramning o'zi MIME bergan bo'lsa,
+    // lekin u generic bo'lmasa, undan foydalanamiz.
+    const telegramContentType =
+      imageResponse.headers.get('content-type')
+
+    if (
+      telegramContentType &&
+      telegramContentType !== 'application/octet-stream'
+    ) {
+      contentType = telegramContentType
+    }
+
+    res.setHeader(
+      'Content-Type',
+      contentType
+    )
+
     res.setHeader(
       'Cache-Control',
-      'public, max-age=86400'
+      'public, max-age=86400, s-maxage=86400'
     )
 
     return res.status(200).send(buffer)
 
   } catch (error) {
-    console.error('GIFT IMAGE ERROR:', error)
+
+    console.error('Gift image error:', error)
 
     return res.status(500).send(
-      error.message
+      `Server xatosi: ${error.message}`
     )
   }
 }
