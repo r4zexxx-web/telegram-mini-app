@@ -5,29 +5,25 @@ const gifts = [
     name: "Ayiqcha",
     stars: 15,
     price: "4 000 so'm",
-    image:
-      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+    image: "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
   },
   {
     name: "Yurakcha",
     stars: 15,
     price: "4 000 so'm",
-    image:
-      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+    image: "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
   },
   {
     name: "Sovg'a",
     stars: 25,
     price: "6 500 so'm",
-    image:
-      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+    image: "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
   },
   {
     name: "Atirgul",
     stars: 50,
     price: "12 000 so'm",
-    image:
-      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+    image: "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
   },
 ];
 
@@ -35,16 +31,18 @@ function Gift() {
   const [selectedGift, setSelectedGift] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  function buyGift(gift) {
+  const buyGift = (gift) => {
     setSelectedGift(gift);
-  }
+  };
 
-  function closeModal() {
-    setSelectedGift(null);
-  }
+  const closeModal = () => {
+    if (!loading) {
+      setSelectedGift(null);
+    }
+  };
 
-  async function paymentDone() {
-    if (!selectedGift) return;
+  const paymentDone = async () => {
+    if (!selectedGift || loading) return;
 
     setLoading(true);
 
@@ -61,12 +59,19 @@ function Gift() {
         firstName: user?.first_name || "",
       };
 
-      console.log("Buyurtma:", order);
+      console.log("BUYURTMA:", order);
 
-      // Hozircha backend ulanmagan.
-      // Keyin shu joyga Java serverni ulaymiz.
+      /*
+        BACKENDNI KEYIN ULAYMIZ.
+        Hozircha foydalanuvchiga tasdiq chiqaramiz.
+      */
 
-      alert("To‘lov haqidagi ma’lumot yuborildi ✅");
+      alert(
+        `To‘lov ma'lumoti qabul qilindi ✅\n\n` +
+        `🎁 ${selectedGift.name}\n` +
+        `⭐ ${selectedGift.stars} Stars\n` +
+        `💰 ${selectedGift.price}`
+      );
 
       setSelectedGift(null);
     } catch (error) {
@@ -75,15 +80,15 @@ function Gift() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return React.createElement(
     "div",
     {
       style: {
-        padding: "15px",
-        background: "#f5f5f5",
         minHeight: "100vh",
+        background: "#f5f5f5",
+        padding: "15px",
         boxSizing: "border-box",
       },
     },
@@ -93,7 +98,8 @@ function Gift() {
       {
         style: {
           textAlign: "center",
-          marginBottom: "20px",
+          margin: "5px 0 20px",
+          fontSize: "23px",
         },
       },
       "🎁 Telegram Gifts"
@@ -127,13 +133,12 @@ function Gift() {
             "div",
             {
               style: {
-                width: "100%",
-                height: "190px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "#fafafa",
+                height: "180px",
                 borderRadius: "15px",
+                background: "#fafafa",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 overflow: "hidden",
               },
             },
@@ -142,13 +147,12 @@ function Gift() {
               src: gift.image,
               alt: gift.name,
               style: {
-                width: "170px",
-                height: "170px",
+                width: "165px",
+                height: "165px",
                 objectFit: "contain",
-                display: "block",
               },
               onError: (e) => {
-                e.currentTarget.style.display = "none";
+                e.currentTarget.alt = "Rasm yuklanmadi";
               },
             })
           ),
@@ -169,6 +173,7 @@ function Gift() {
             "div",
             {
               style: {
+                fontSize: "14px",
                 color: "#777",
                 marginTop: "5px",
               },
@@ -180,7 +185,7 @@ function Gift() {
             "div",
             {
               style: {
-                fontSize: "17px",
+                fontSize: "16px",
                 fontWeight: "700",
                 marginTop: "5px",
               },
@@ -199,10 +204,9 @@ function Gift() {
                 border: "none",
                 borderRadius: "12px",
                 background: "#2481cc",
-                color: "white",
+                color: "#fff",
                 fontSize: "15px",
-                fontWeight: "600",
-                cursor: "pointer",
+                fontWeight: "700",
               },
             },
             "Sotib olish"
@@ -220,8 +224,8 @@ function Gift() {
             inset: "0",
             background: "rgba(0,0,0,0.55)",
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
             padding: "20px",
             zIndex: "9999",
           },
@@ -233,7 +237,7 @@ function Gift() {
             style: {
               width: "100%",
               maxWidth: "360px",
-              background: "white",
+              background: "#fff",
               borderRadius: "20px",
               padding: "20px",
               boxSizing: "border-box",
@@ -245,32 +249,32 @@ function Gift() {
             {
               style: {
                 textAlign: "center",
-                marginTop: "0",
+                margin: "0 0 10px",
               },
             },
             `🎁 ${selectedGift.name}`
           ),
 
           React.createElement(
-            "p",
+            "div",
             {
               style: {
                 textAlign: "center",
                 color: "#555",
+                marginBottom: "15px",
               },
             },
-            `Narxi: ${selectedGift.price}`
+            `${selectedGift.price} • ⭐ ${selectedGift.stars} Stars`
           ),
 
           React.createElement(
             "div",
             {
               style: {
-                background: "#f3f3f3",
-                borderRadius: "12px",
-                padding: "15px",
+                background: "#f2f2f2",
+                borderRadius: "13px",
+                padding: "16px",
                 textAlign: "center",
-                marginTop: "15px",
               },
             },
 
@@ -280,7 +284,7 @@ function Gift() {
                 style: {
                   fontSize: "13px",
                   color: "#777",
-                  marginBottom: "7px",
+                  marginBottom: "8px",
                 },
               },
               "To‘lov uchun karta"
@@ -290,7 +294,7 @@ function Gift() {
               "div",
               {
                 style: {
-                  fontSize: "20px",
+                  fontSize: "19px",
                   fontWeight: "700",
                   letterSpacing: "1px",
                 },
@@ -310,8 +314,8 @@ function Gift() {
                 padding: "13px",
                 border: "none",
                 borderRadius: "12px",
-                background: "#20a464",
-                color: "white",
+                background: loading ? "#999" : "#20a464",
+                color: "#fff",
                 fontSize: "16px",
                 fontWeight: "700",
               },
@@ -323,6 +327,7 @@ function Gift() {
             "button",
             {
               onClick: closeModal,
+              disabled: loading,
               style: {
                 width: "100%",
                 marginTop: "10px",
@@ -341,4 +346,9 @@ function Gift() {
   );
 }
 
-export default Gift;
+export default function handler(req, res) {
+  res.status(200).json({
+    success: true,
+    message: "Gifts API ishlayapti",
+  });
+}
