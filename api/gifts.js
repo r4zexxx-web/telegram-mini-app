@@ -1,87 +1,191 @@
-export default async function handler(req, res) {
-  try {
-    const botToken = process.env.BOT_TOKEN
+```js
+import React from "react";
 
-    if (!botToken) {
-      return res.status(500).json({
-        error: 'BOT_TOKEN topilmadi'
-      })
-    }
+const gifts = [
+  {
+    name: "Ayiqcha",
+    stars: 15,
+    price: "4 000 so'm",
+    image:
+      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+  },
+  {
+    name: "Yurakcha",
+    stars: 15,
+    price: "4 000 so'm",
+    image:
+      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+  },
+  {
+    name: "Sovg'a",
+    stars: 25,
+    price: "6 500 so'm",
+    image:
+      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+  },
+  {
+    name: "Atirgul",
+    stars: 50,
+    price: "12 000 so'm",
+    image:
+      "https://cdn.denzyve.shop/assets/png/gift_6012435906336654262.png",
+  },
+];
 
-    const telegramResponse = await fetch(
-      `https://api.telegram.org/bot${botToken}/getAvailableGifts`
-    )
+function Gift() {
+  function buyGift(gift) {
+    alert(gift.name + " tanlandi!\nNarxi: " + gift.price);
+  }
 
-    const data = await telegramResponse.json()
+  return React.createElement(
+    "div",
+    {
+      style: {
+        minHeight: "100vh",
+        padding: "20px 15px 100px",
+        boxSizing: "border-box",
+        background: "#f5f5f5",
+      },
+    },
 
-    if (!data.ok) {
-      console.error('Telegram error:', data)
+    React.createElement(
+      "h1",
+      {
+        style: {
+          textAlign: "center",
+          fontSize: "28px",
+          margin: "5px 0 22px",
+          color: "#222",
+        },
+      },
+      "🎁 Gift"
+    ),
 
-      return res.status(500).json({
-        error: 'Telegram Giftlarni qaytarmadi',
-        telegramError: data.description
-      })
-    }
+    React.createElement(
+      "div",
+      {
+        style: {
+          display: "grid",
+          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+          gap: "14px",
+          maxWidth: "600px",
+          margin: "0 auto",
+        },
+      },
 
-    const gifts = data.result.gifts
-      .slice()
-      .sort((a, b) => a.star_count - b.star_count)
-      .slice(0, 20)
-      .map((gift, index) => {
+      gifts.map(function (gift, index) {
+        return React.createElement(
+          "div",
+          {
+            key: index,
+            style: {
+              background: "#fff",
+              borderRadius: "20px",
+              padding: "12px",
+              boxSizing: "border-box",
+              boxShadow: "0 3px 12px rgba(0,0,0,0.08)",
+              overflow: "hidden",
+            },
+          },
 
-        const stars = Number(gift.star_count || 0)
+          React.createElement(
+            "div",
+            {
+              style: {
+                width: "100%",
+                height: "190px",
+                borderRadius: "16px",
+                background: "#f0f0f0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              },
+            },
 
-        // 15 Stars = 4 000 so'm
-        const price =
-          Math.ceil(
-            (stars * 4000 / 15) / 1000
-          ) * 1000
+            React.createElement("img", {
+              src: gift.image,
+              alt: gift.name,
+              style: {
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                display: "block",
+              },
+            })
+          ),
 
-        const sticker = gift.sticker || {}
+          React.createElement(
+            "h2",
+            {
+              style: {
+                fontSize: "18px",
+                margin: "12px 2px 7px",
+                color: "#222",
+              },
+            },
+            gift.name
+          ),
 
-        // Faqat oddiy thumbnail rasmini olamiz
-        const imageFileId =
-          sticker.thumbnail?.file_id || ''
+          React.createElement(
+            "div",
+            {
+              style: {
+                fontSize: "14px",
+                color: "#666",
+                marginBottom: "10px",
+              },
+            },
+            "⭐ " + gift.stars + " Stars"
+          ),
 
-        return {
-          id: index + 1,
+          React.createElement(
+            "div",
+            {
+              style: {
+                display: "flex",
+                flexDirection: "column",
+                gap: "9px",
+              },
+            },
 
-          telegramGiftId: gift.id,
-
-          name:
-            sticker.emoji ||
-            `Gift ${index + 1}`,
-
-          stars,
-
-          price,
-
-          imageFileId,
-
-          stickerType: {
-            animated: Boolean(
-              sticker.is_animated
+            React.createElement(
+              "strong",
+              {
+                style: {
+                  fontSize: "16px",
+                  color: "#222",
+                },
+              },
+              gift.price
             ),
 
-            video: Boolean(
-              sticker.is_video
+            React.createElement(
+              "button",
+              {
+                onClick: function () {
+                  buyGift(gift);
+                },
+                style: {
+                  width: "100%",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "11px",
+                  background: "#2481cc",
+                  color: "#fff",
+                  fontSize: "15px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                },
+              },
+              "Sotib olish"
             )
-          }
-        }
+          )
+        );
       })
-
-    return res.status(200).json(gifts)
-
-  } catch (error) {
-
-    console.error(
-      'Gifts error:',
-      error
     )
-
-    return res.status(500).json({
-      error: 'Server xatosi',
-      message: error.message
-    })
-  }
+  );
 }
+
+export default Gift;
+```
