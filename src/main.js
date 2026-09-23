@@ -612,11 +612,11 @@ function renderHome() {
 
         <button
           class="big-menu-button gift-menu"
-          onclick="openGift()"
+onclick="openCS2()" 
         >
           <span class="big-menu-icon">🎁</span>
           <span class="big-menu-text">
-            GIFT
+            🔫 CS2 SKINLAR
           </span>
         </button>
 
@@ -1616,3 +1616,238 @@ function startApp() {
 
 
 startApp()
+window.openCS2 = function() {
+
+  app.innerHTML = `
+    <div class="page">
+
+      <div class="page-header">
+        <button onclick="showHome()">←</button>
+
+        <h2>🔫 CS2 SKINLAR</h2>
+      </div>
+
+      <div style="
+        text-align:center;
+        padding:40px 20px;
+        opacity:0.8;
+      ">
+        <div style="font-size:60px;">🔫</div>
+
+        <h3>CS2 Skinlar</h3>
+
+        <p>
+          Hozircha skinlar qo‘shilmagan.
+        </p>
+
+        <button
+          onclick="openAddSkin()"
+          style="
+            margin-top:20px;
+            padding:14px 22px;
+            border:0;
+            border-radius:12px;
+            font-size:16px;
+            cursor:pointer;
+          "
+        >
+          ➕ Skin qo‘shish
+        </button>
+      </div>
+
+    </div>
+  `
+
+}
+const ADMIN_ID = '8675884464'
+
+window.openAddSkin = function() {
+
+  const userId =
+    tg?.initDataUnsafe?.user?.id?.toString() || ''
+
+  if (userId !== ADMIN_ID) {
+
+    showAlert('Bu bo‘lim faqat admin uchun 🔒')
+
+    return
+
+  }
+
+  app.innerHTML = `
+
+    <div class="page">
+
+      <div class="page-header">
+
+        <button onclick="openCS2()">
+          ←
+        </button>
+
+        <h2>➕ Skin qo‘shish</h2>
+
+      </div>
+
+      <div style="
+        padding:20px;
+      ">
+
+        <input
+          id="skin-name"
+          type="text"
+          placeholder="Skin nomi"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:12px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="skin-wear"
+          type="text"
+          placeholder="Wear (masalan: Factory New)"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:12px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="skin-float"
+          type="text"
+          placeholder="Float (ixtiyoriy)"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:12px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="skin-price"
+          type="number"
+          placeholder="Narxi (so‘m)"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:12px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            box-sizing:border-box;
+          "
+        >
+
+        <textarea
+          id="skin-info"
+          placeholder="Qo‘shimcha ma'lumot"
+          style="
+            width:100%;
+            min-height:100px;
+            padding:14px;
+            margin-bottom:12px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            box-sizing:border-box;
+          "
+        ></textarea>
+
+        <button
+          onclick="saveSkin()"
+          style="
+            width:100%;
+            padding:15px;
+            border:0;
+            border-radius:12px;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+          ✅ Skinni saqlash
+        </button>
+
+      </div>
+
+    </div>
+
+  `
+
+}
+window.saveSkin = function() {
+
+  const name =
+    document.querySelector('#skin-name')?.value.trim()
+
+  const wear =
+    document.querySelector('#skin-wear')?.value.trim()
+
+  const float =
+    document.querySelector('#skin-float')?.value.trim()
+
+  const price =
+    document.querySelector('#skin-price')?.value
+
+  const info =
+    document.querySelector('#skin-info')?.value.trim()
+
+  if (!name) {
+
+    showAlert('Skin nomini kiriting ❌')
+
+    return
+
+  }
+
+  if (!wear) {
+
+    showAlert('Wear ni kiriting ❌')
+
+    return
+
+  }
+
+  if (!price) {
+
+    showAlert('Narxni kiriting ❌')
+
+    return
+
+  }
+
+  const skin = {
+
+    id: Date.now(),
+
+    name: name,
+
+    wear: wear,
+
+    float: float,
+
+    price: Number(price),
+
+    info: info
+
+  }
+
+  console.log(
+    'YANGI CS2 SKIN:',
+    skin
+  )
+
+  showAlert(
+    'Skin maʼlumotlari tayyor ✅'
+  )
+
+}
