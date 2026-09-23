@@ -1692,6 +1692,44 @@ window.openAddSkin = function() {
         padding:20px;
       ">
 
+        <label style="
+          display:block;
+          margin-bottom:8px;
+          font-weight:bold;
+        ">
+          🖼 Skin rasmi
+        </label>
+
+        <input
+          id="skin-image"
+          type="file"
+          accept="image/*"
+          style="
+            width:100%;
+            padding:12px;
+            margin-bottom:16px;
+            box-sizing:border-box;
+          "
+        >
+
+        <div
+          id="skin-image-preview"
+          style="
+            display:none;
+            margin-bottom:16px;
+            text-align:center;
+          "
+        >
+          <img
+            id="skin-preview-img"
+            style="
+              max-width:100%;
+              max-height:250px;
+              border-radius:12px;
+            "
+          >
+        </div>
+
         <input
           id="skin-name"
           type="text"
@@ -1782,6 +1820,58 @@ window.openAddSkin = function() {
     </div>
 
   `
+
+  const imageInput =
+    document.querySelector('#skin-image')
+
+  imageInput?.addEventListener(
+    'change',
+    function() {
+
+      const file =
+        this.files?.[0]
+
+      if (!file) return
+
+      if (!file.type.startsWith('image/')) {
+
+        showAlert(
+          'Faqat rasm faylini tanlang ❌'
+        )
+
+        this.value = ''
+
+        return
+
+      }
+
+      const reader =
+        new FileReader()
+
+      reader.onload = function(event) {
+
+        const preview =
+          document.querySelector('#skin-preview-img')
+
+        const box =
+          document.querySelector('#skin-image-preview')
+
+        if (preview && box) {
+
+          preview.src =
+            event.target.result
+
+          box.style.display =
+            'block'
+
+        }
+
+      }
+
+      reader.readAsDataURL(file)
+
+    }
+  )
 
 }
 window.saveSkin = function() {
