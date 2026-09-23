@@ -88,13 +88,16 @@ export default async function handler(req, res) {
     const telegramResult = await telegramResponse.json()
 
     if (!telegramResult.ok) {
-      console.error('Telegram xatosi:', telegramResult)
 
-      return res.status(500).json({
-        ok: false,
-        message: telegramResult.description || 'Telegramga xabar yuborilmadi'
-      })
-    }
+  console.error('Telegram xatosi:', telegramResult)
+
+  return res.status(500).json({
+    ok: false,
+    message: telegramResult.description || 'Telegramga xabar yuborilmadi',
+    telegramError: telegramResult
+  })
+
+}
 
     return res.status(200).json({
       ok: true,
