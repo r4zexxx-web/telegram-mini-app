@@ -257,310 +257,142 @@ button {
   margin-bottom: 18px;
 }
 
-.shop-header h1 {
-  font-size: 20px;
+.shop-header h1 
+  font-size: 22px;
   margin: 0;
-  flex: 1;
+  font-weight: 800;
 }
 
 .back-button {
-  width: 43px;
-  height: 43px;
+  width: 42px;
+  height: 42px;
   border: none;
-  border-radius: 13px;
+  border-radius: 14px;
   background: white;
-  font-size: 25px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.cart-icon {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 24px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
 
-/* STARS */
+/* PRODUCT CARD */
 
 .products {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.product {
-  background: white;
-  border-radius: 17px;
-  padding: 13px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  box-shadow: 0 2px 9px rgba(0,0,0,0.07);
 }
 
-.product-icon {
-  width: 55px;
-  height: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff8d9;
-  border-radius: 15px;
-  font-size: 30px;
+.product-card {
+  background: white;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
-.product-info {
-  flex: 1;
+.product-emoji {
+  font-size: 45px;
+  margin-bottom: 8px;
 }
 
-.product-info h2 {
-  font-size: 16px;
-  margin: 0 0 5px;
+.product-name {
+  font-size: 17px;
+  font-weight: 800;
 }
 
-.product-info p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+.product-price {
+  margin: 8px 0 12px;
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.product button {
+.buy-button {
+  width: 100%;
   border: none;
-  border-radius: 11px;
-  padding: 10px 12px;
+  border-radius: 13px;
+  padding: 11px;
   background: #2481cc;
   color: white;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
 }
 
 
 /* CART */
 
-.cart {
+.cart-box {
+  position: sticky;
+  bottom: 10px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 20px;
   background: white;
-  border-radius: 18px;
-  padding: 15px;
-  margin-top: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
 }
 
-.cart h2 {
-  margin: 0 0 12px;
-  font-size: 19px;
-}
-
-.empty-cart {
-  text-align: center;
-  color: #888;
-  padding: 15px 0;
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.cart-item-icon {
-  font-size: 25px;
-}
-
-.cart-item-info {
-  flex: 1;
-}
-
-.cart-item-info strong {
-  display: block;
-  font-size: 15px;
-}
-
-.cart-item-info span {
-  display: block;
-  font-size: 13px;
-  color: #777;
-  margin-top: 3px;
-}
-
-.quantity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 7px;
-}
-
-.quantity-button {
-  width: 29px;
-  height: 29px;
-  border: none;
-  border-radius: 8px;
-  background: #eeeeee;
-  font-size: 18px;
-}
-
-.remove-button {
-  border: none;
-  background: transparent;
-  font-size: 17px;
-}
-
-.cart-total {
+.cart-info {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
-  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 12px;
 }
 
-.order-button {
+.cart-button {
   width: 100%;
   border: none;
-  border-radius: 13px;
-  background: #20a464;
+  border-radius: 14px;
+  padding: 14px;
+  background: #22a06b;
   color: white;
-  padding: 13px;
-  margin-top: 14px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 
-/* GIFTS */
+/* GIFT */
 
-.gift-grid {
+.gifts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
 .gift-card {
   background: white;
-  border-radius: 18px;
-  padding: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  overflow: hidden;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 .gift-image-box {
-  height: 170px;
-  border-radius: 15px;
-  background: #fafafa;
+  height: 130px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  overflow: hidden;
-}
-
-.gift-image {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-}
-
-.gift-fallback {
-  font-size: 65px;
-}
-
-.gift-info {
-  text-align: center;
-}
-
-.gift-info h3 {
-  margin: 10px 0 5px;
-  font-size: 17px;
-}
-
-.gift-stars {
-  color: #777;
-  font-size: 13px;
-}
-
-.gift-price {
-  margin-top: 5px;
-  font-size: 15px;
-  font-weight: 800;
-}
-
-.gift-buy-button {
-  width: 100%;
-  border: none;
-  border-radius: 11px;
-  background: #2481cc;
-  color: white;
-  padding: 11px 5px;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-
-/* MODAL */
-
-.modal-background {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
-  z-index: 99999;
-}
-
-.modal {
-  width: 100%;
-  max-width: 370px;
-  background: white;
-  border-radius: 22px;
-  padding: 20px;
-}
-
-.modal h2 {
-  text-align: center;
-  margin: 0 0 8px;
-}
-
-.modal-subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 18px;
-}
-
-.card-box {
-  background: #f1f3f5;
-  border-radius: 15px;
-  padding: 18px;
-  text-align: center;
-}
-
-.card-label {
-  font-size: 13px;
-  color: #777;
   margin-bottom: 8px;
 }
 
-.card-number {
-  font-size: 20px;
+.gift-image {
+  max-width: 110px;
+  max-height: 110px;
+  object-fit: contain;
+}
+
+.gift-name {
+  font-size: 17px;
   font-weight: 800;
-  letter-spacing: 1px;
 }
 
-.modal-button {
-  width: 100%;
-  border: none;
-  border-radius: 13px;
-  padding: 13px;
-  margin-top: 12px;
-  font-size: 16px;
-  font-weight: 700;
+.gift-stars {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #777;
 }
 
-.paid-button {
-  background: #20a464;
-  color: white;
-}
-
-.close-button {
-  background: #eeeeee;
-  color: #333;
+.gift-price {
+  margin: 7px 0 12px;
+  font-weight: 800;
 }
 
 
@@ -568,24 +400,24 @@ button {
 
 .contact-section {
   background: white;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 25px 18px;
   text-align: center;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
 }
 
 .contact-icon {
   font-size: 65px;
-  margin-bottom: 10px;
 }
 
 .contact-section h2 {
-  font-size: 20px;
-  margin: 10px 0;
+  margin: 15px 0 8px;
+  font-size: 21px;
 }
 
 .contact-description {
   color: #777;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .contact-button {
@@ -596,11 +428,117 @@ button {
   width: 100%;
   padding: 14px;
   margin-top: 10px;
-  border-radius: 13px;
-  background: #2481cc;
-  color: white;
+  border-radius: 15px;
+  background: #f1f3f5;
+  color: #111;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
+}
+
+
+/* MODAL */
+
+.modal-background {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 21px;
+}
+
+.modal-subtitle {
+  line-height: 1.7;
+  color: #555;
+}
+
+.card-box {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 17px;
+  background: #f3f5f7;
+}
+
+.card-label {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.card-number {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.modal-button {
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.paid-button {
+  background: #22a06b;
+  color: white;
+}
+
+.close-button {
+  background: #e9ecef;
+  color: #222;
+}
+
+
+/* PAYMENT TIMER */
+
+.payment-status-box {
+  background: #f5f7f9;
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.payment-status-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.payment-status-title {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.payment-timer {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin: 18px 0;
+}
+
+.payment-status-text {
+  font-size: 14px;
+  color: #777;
 }
 
 
@@ -610,53 +548,42 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .loading-icon {
-  font-size: 55px;
-  margin-bottom: 10px;
+  font-size: 70px;
+  animation: loading-spin 1.2s infinite ease-in-out;
 }
 
 .loading h1 {
+  margin-top: 20px;
   font-size: 22px;
 }
 
 .loading p {
-  color: #777;
+  opacity: 0.6;
 }
 
-
-/* MOBILE */
-
-@media (max-width: 400px) {
-
-  .gift-grid {
-    gap: 8px;
+@keyframes loading-spin {
+  0% {
+    transform: scale(1);
   }
 
-  .gift-image-box {
-    height: 150px;
+  50% {
+    transform: scale(1.2);
   }
 
-  .gift-image {
-    width: 135px;
-    height: 135px;
+  100% {
+    transform: scale(1);
   }
-
-  .gift-info h3 {
-    font-size: 15px;
-  }
-
 }
 
 `
 
 document.head.appendChild(style)
-
-
 /* =====================================================
    HOME
 ===================================================== */
@@ -664,7 +591,6 @@ document.head.appendChild(style)
 function renderHome() {
 
   app.innerHTML = `
-
     <div class="home">
 
       <h1 class="home-title">
@@ -677,15 +603,10 @@ function renderHome() {
           class="big-menu-button stars-menu"
           onclick="openStars()"
         >
-
-          <span class="big-menu-icon">
-            ⭐
-          </span>
-
+          <span class="big-menu-icon">⭐</span>
           <span class="big-menu-text">
             STARS
           </span>
-
         </button>
 
 
@@ -693,15 +614,10 @@ function renderHome() {
           class="big-menu-button gift-menu"
           onclick="openGift()"
         >
-
-          <span class="big-menu-icon">
-            🎁
-          </span>
-
+          <span class="big-menu-icon">🎁</span>
           <span class="big-menu-text">
             GIFT
           </span>
-
         </button>
 
 
@@ -709,21 +625,15 @@ function renderHome() {
           class="big-menu-button producer-menu"
           onclick="openProducer()"
         >
-
-          <span class="big-menu-icon">
-            🏭
-          </span>
-
+          <span class="big-menu-icon">🏭</span>
           <span class="big-menu-text">
             ISHLAB CHIQARUVCHI
           </span>
-
         </button>
 
       </div>
 
     </div>
-
   `
 }
 
@@ -731,6 +641,13 @@ function renderHome() {
 /* =====================================================
    STARS
 ===================================================== */
+
+window.openStars = function() {
+
+  renderStars()
+
+}
+
 
 function renderStars() {
 
@@ -748,12 +665,8 @@ function renderStars() {
         </button>
 
         <h1>
-          ⭐ Telegram Stars
+          ⭐ Stars
         </h1>
-
-        <div class="cart-icon">
-          🛒 ${getCartCount()}
-        </div>
 
       </div>
 
@@ -762,28 +675,25 @@ function renderStars() {
 
         ${products.map(product => `
 
-          <div class="product">
+          <div class="product-card">
 
-            <div class="product-icon">
+            <div class="product-emoji">
               ${product.emoji}
             </div>
 
-            <div class="product-info">
+            <div class="product-name">
+              ${product.name}
+            </div>
 
-              <h2>
-                ${product.name}
-              </h2>
-
-              <p>
-                ${formatPrice(product.price)}
-              </p>
-
+            <div class="product-price">
+              ${formatPrice(product.price)}
             </div>
 
             <button
+              class="buy-button"
               onclick="addToCart(${product.id})"
             >
-              Sotib olish
+              Savatchaga
             </button>
 
           </div>
@@ -793,32 +703,39 @@ function renderStars() {
       </div>
 
 
-      <div class="cart">
+      <div class="cart-box">
 
-        <h2>
-          🛒 Savatcha
-        </h2>
+        <div class="cart-info">
 
-        ${renderCart()}
+          <span>
+            🛒 Savatcha
+          </span>
 
-        <div class="cart-total">
+          <span>
+            ${getCartCount()} ta
+          </span>
+
+        </div>
+
+
+        <div class="cart-info">
 
           <span>
             Jami:
           </span>
 
-          <strong>
+          <span>
             ${formatPrice(getCartTotal())}
-          </strong>
+          </span>
 
         </div>
 
 
         <button
-          class="order-button"
+          class="cart-button"
           onclick="orderCart()"
         >
-          Buyurtma berish
+          💳 Buyurtma berish
         </button>
 
       </div>
@@ -830,83 +747,364 @@ function renderStars() {
 
 
 /* =====================================================
-   CART HTML
+   HOMEGA QAYTISH
 ===================================================== */
 
-function renderCart() {
+window.goHome = function() {
 
-  if (cart.length === 0) {
+  renderHome()
 
-    return `
-      <p class="empty-cart">
-        Savatcha hozircha bo‘sh 🛒
-      </p>
-    `
-
-  }
-
-
-  return cart.map(item => `
-
-    <div class="cart-item">
-
-      <div class="cart-item-icon">
-        ${item.emoji}
-      </div>
-
-
-      <div class="cart-item-info">
-
-        <strong>
-          ${item.name}
-        </strong>
-
-        <span>
-          ${formatPrice(item.price)}
-        </span>
-
-
-        <div class="quantity">
-
-          <button
-            class="quantity-button"
-            onclick="decreaseQuantity(${item.id})"
-          >
-            −
-          </button>
-
-          <span>
-            ${item.quantity}
-          </span>
-
-          <button
-            class="quantity-button"
-            onclick="increaseQuantity(${item.id})"
-          >
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="remove-button"
-        onclick="removeFromCart(${item.id})"
-      >
-        ❌
-      </button>
-
-    </div>
-
-  `).join('')
 }
 
 
 /* =====================================================
-   GIFT
+   SAVATCHAGA QO‘SHISH
 ===================================================== */
+
+window.addToCart = function(id) {
+
+  const product = products.find(
+    item => item.id === id
+  )
+
+  if (!product) return
+
+
+  const existing = cart.find(
+    item => item.id === id
+  )
+
+
+  if (existing) {
+
+    existing.quantity++
+
+  } else {
+
+    cart.push({
+      ...product,
+      quantity: 1
+    })
+
+  }
+
+
+  showAlert(
+    `${product.name} savatchaga qo‘shildi ✅`
+  )
+
+
+  renderStars()
+
+}
+/* =====================================================
+   SAVATCHANI KO‘RISH
+===================================================== */
+
+window.showCart = function() {
+
+  app.innerHTML = `
+
+    <div class="shop">
+
+      <div class="shop-header">
+
+        <button
+          class="back-button"
+          onclick="renderStars()"
+        >
+          ←
+        </button>
+
+        <h1>
+          🛒 Savatcha
+        </h1>
+
+      </div>
+
+
+      ${
+        cart.length === 0
+
+        ? `
+
+          <div
+            style="
+              background:white;
+              padding:30px 20px;
+              border-radius:20px;
+              text-align:center;
+            "
+          >
+
+            <div style="font-size:55px;">
+              🛒
+            </div>
+
+            <h2>
+              Savatcha bo‘sh
+            </h2>
+
+            <button
+              class="buy-button"
+              onclick="renderStars()"
+            >
+              ⭐ Stars ko‘rish
+            </button>
+
+          </div>
+
+        `
+
+        : `
+
+          ${cart.map(item => `
+
+            <div
+              class="product-card"
+              style="
+                margin-bottom:12px;
+                text-align:left;
+              "
+            >
+
+              <div
+                style="
+                  display:flex;
+                  align-items:center;
+                  justify-content:space-between;
+                  gap:10px;
+                "
+              >
+
+                <div>
+
+                  <div class="product-name">
+                    ${item.emoji} ${item.name}
+                  </div>
+
+                  <div class="product-price">
+                    ${formatPrice(item.price)}
+                  </div>
+
+                </div>
+
+
+                <div
+                  style="
+                    display:flex;
+                    align-items:center;
+                    gap:8px;
+                  "
+                >
+
+                  <button
+                    onclick="decreaseCart(${item.id})"
+                    style="
+                      width:35px;
+                      height:35px;
+                      border:none;
+                      border-radius:10px;
+                      background:#eee;
+                      font-size:20px;
+                    "
+                  >
+                    −
+                  </button>
+
+                  <b>
+                    ${item.quantity}
+                  </b>
+
+                  <button
+                    onclick="increaseCart(${item.id})"
+                    style="
+                      width:35px;
+                      height:35px;
+                      border:none;
+                      border-radius:10px;
+                      background:#2481cc;
+                      color:white;
+                      font-size:20px;
+                    "
+                  >
+                    +
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `).join('')}
+
+
+          <div class="cart-box">
+
+            <div class="cart-info">
+
+              <span>
+                Mahsulotlar:
+              </span>
+
+              <span>
+                ${getCartCount()} ta
+              </span>
+
+            </div>
+
+
+            <div class="cart-info">
+
+              <span>
+                Jami:
+              </span>
+
+              <span>
+                ${formatPrice(getCartTotal())}
+              </span>
+
+            </div>
+
+
+            <button
+              class="cart-button"
+              onclick="orderCart()"
+            >
+              💳 Buyurtma berish
+            </button>
+
+          </div>
+
+        `
+      }
+
+    </div>
+
+  `
+}
+
+
+/* =====================================================
+   MIQDORNI OSHIRISH
+===================================================== */
+
+window.increaseCart = function(id) {
+
+  const item = cart.find(
+    product => product.id === id
+  )
+
+  if (!item) return
+
+  item.quantity++
+
+  showCart()
+
+}
+
+
+/* =====================================================
+   MIQDORNI KAMAYTIRISH
+===================================================== */
+
+window.decreaseCart = function(id) {
+
+  const item = cart.find(
+    product => product.id === id
+  )
+
+  if (!item) return
+
+
+  item.quantity--
+
+
+  if (item.quantity <= 0) {
+
+    cart = cart.filter(
+      product => product.id !== id
+    )
+
+  }
+
+
+  showCart()
+
+}
+
+
+/* =====================================================
+   STARS BUYURTMASI
+===================================================== */
+
+window.orderCart = function() {
+
+  if (cart.length === 0) {
+
+    showAlert(
+      'Savatcha bo‘sh 🛒'
+    )
+
+    return
+
+  }
+
+
+  const total = getCartTotal()
+
+  const user =
+    tg?.initDataUnsafe?.user
+
+
+  const order = {
+
+    type: 'stars',
+
+    items: cart,
+
+    total: total,
+
+    userId:
+      user?.id || '',
+
+    username:
+      user?.username || '',
+
+    firstName:
+      user?.first_name || ''
+
+  }
+
+
+  console.log(
+    'STARS BUYURTMA:',
+    order
+  )
+
+
+  showAlert(
+
+    `Buyurtma qabul qilindi ✅\n\n` +
+
+    `⭐ Stars: ${getCartCount()}\n` +
+
+    `💰 Jami: ${formatPrice(total)}`
+
+  )
+
+}
+/* =====================================================
+   GIFT BO‘LIMI
+===================================================== */
+
+window.openGift = function() {
+
+  renderGift()
+
+}
+
 
 function renderGift() {
 
@@ -924,13 +1122,13 @@ function renderGift() {
         </button>
 
         <h1>
-          🎁 Telegram Gifts
+          🎁 Gift
         </h1>
 
       </div>
 
 
-      <div class="gift-grid">
+      <div class="gifts">
 
         ${gifts.map(gift => `
 
@@ -938,42 +1136,52 @@ function renderGift() {
 
             <div class="gift-image-box">
 
-              <img
-                class="gift-image"
-                src="${gift.image}"
-                alt="${gift.name}"
-                onerror="
-                  this.style.display='none';
-                  this.parentElement.innerHTML='<div class=\\'gift-fallback\\'>🎁</div>';
-                "
-              >
+              ${
+                gift.image
+
+                ? `
+                  <img
+                    class="gift-image"
+                    src="${gift.image}"
+                    alt="${gift.name}"
+                  >
+                `
+
+                : `
+                  <div
+                    style="
+                      font-size:70px;
+                    "
+                  >
+                    🎁
+                  </div>
+                `
+              }
 
             </div>
 
 
-            <div class="gift-info">
-
-              <h3>
-                ${gift.name}
-              </h3>
-
-              <div class="gift-stars">
-                ⭐ ${gift.stars} Stars
-              </div>
-
-              <div class="gift-price">
-                ${formatPrice(gift.price)}
-              </div>
-
-
-              <button
-                class="gift-buy-button"
-                onclick="buyGift(${gift.id})"
-              >
-                Sotib olish
-              </button>
-
+            <div class="gift-name">
+              ${gift.name}
             </div>
+
+
+            <div class="gift-stars">
+              ⭐ ${gift.stars} Stars
+            </div>
+
+
+            <div class="gift-price">
+              💰 ${formatPrice(gift.price)}
+            </div>
+
+
+            <button
+              class="buy-button"
+              onclick="buyGift(${gift.id})"
+            >
+              🛒 Sotib olish
+            </button>
 
           </div>
 
@@ -988,8 +1196,13 @@ function renderGift() {
 
 
 /* =====================================================
-   GIFT BUY
+   GIFT TO‘LOV OYNASI
 ===================================================== */
+
+let giftPaymentTimer = null
+
+let giftPaymentSeconds = 600
+
 
 window.buyGift = function(id) {
 
@@ -1000,7 +1213,8 @@ window.buyGift = function(id) {
   if (!gift) return
 
 
-  const cardNumber = '5614 6821 1064 4707'
+  const cardNumber =
+    '5614 6821 1064 4707'
 
 
   app.insertAdjacentHTML(
@@ -1020,10 +1234,15 @@ window.buyGift = function(id) {
             🎁 ${gift.name}
           </h2>
 
+
           <div class="modal-subtitle">
+
             ⭐ ${gift.stars} Stars
+
             <br>
+
             💰 ${formatPrice(gift.price)}
+
           </div>
 
 
@@ -1060,33 +1279,27 @@ window.buyGift = function(id) {
       </div>
 
     `
-
   )
 
 }
 
 
 /* =====================================================
-   CLOSE GIFT MODAL
+   TO‘LOV QILDIM
 ===================================================== */
 
-window.closeGiftModal = function() {
+window.paymentDone = function(id) {
 
-  const modal =
-    document.querySelector('#gift-modal')
-
-  if (modal) {
-    modal.remove()
-  }
+  startGiftPaymentTimer(id)
 
 }
 
 
 /* =====================================================
-   PAYMENT DONE
+   10 DАQIQA TEKSHIRUV
 ===================================================== */
 
-window.paymentDone = function(id) {
+window.startGiftPaymentTimer = function(id) {
 
   const gift = gifts.find(
     item => item.id === id
@@ -1095,329 +1308,218 @@ window.paymentDone = function(id) {
   if (!gift) return
 
 
-  const user =
-    tg?.initDataUnsafe?.user
+  const modal =
+    document.querySelector('#gift-modal')
 
 
-  const order = {
+  if (!modal) return
 
-    type: 'gift',
 
-    giftId: gift.id,
+  if (giftPaymentTimer) {
 
-    giftName: gift.name,
-
-    stars: gift.stars,
-
-    price: gift.price,
-
-    userId: user?.id || '',
-
-    username: user?.username || '',
-
-    firstName: user?.first_name || ''
+    clearInterval(
+      giftPaymentTimer
+    )
 
   }
 
 
-  console.log(
-    'BUYURTMA:',
-    order
-  )
+  giftPaymentSeconds = 600
 
 
-  closeGiftModal()
+  modal.querySelector(
+    '.modal'
+  ).innerHTML = `
+
+    <h2>
+      ⏳ To‘lov tekshirilmoqda
+    </h2>
 
 
-  showAlert(
+    <div class="modal-subtitle">
 
-    `Buyurtma qabul qilindi ✅\n\n` +
+      🎁 ${gift.name}
 
-    `🎁 ${gift.name}\n` +
+      <br>
 
-    `⭐ ${gift.stars} Stars\n` +
+      ⭐ ${gift.stars} Stars
 
-    `💰 ${formatPrice(gift.price)}\n\n` +
+      <br>
 
-    `To‘lov tekshiriladi.`
+      💰 ${formatPrice(gift.price)}
 
-  )
-
-}
+    </div>
 
 
-/* =====================================================
-   PRODUCER
-===================================================== */
+    <div class="payment-status-box">
 
-function renderProducer() {
-
-  app.innerHTML = `
-
-    <div class="shop">
-
-      <div class="shop-header">
-
-        <button
-          class="back-button"
-          onclick="goHome()"
-        >
-          ←
-        </button>
-
-        <h1>
-          🏭 Ishlab chiqaruvchi
-        </h1>
-
+      <div class="payment-status-icon">
+        🔍
       </div>
 
 
-      <div class="contact-section">
-
-        <div class="contact-icon">
-          🏭
-        </div>
+      <div class="payment-status-title">
+        To‘lovingiz tekshirilmoqda
+      </div>
 
 
-        <h2>
-          SHERALIYEV MUHAMMADJON
-        </h2>
+      <div
+        class="payment-timer"
+        id="gift-payment-timer"
+      >
+        10:00
+      </div>
 
 
-        <p class="contact-description">
-          Biz bilan bog‘laning
-        </p>
-
-
-        <a
-          class="contact-button"
-          href="https://t.me/MU4AMMADJON"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ✈️ Telegram
-        </a>
-
-
-        <a
-          class="contact-button"
-          href="https://www.instagram.com/RON_CBR/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📸 Instagram
-        </a>
-
-
-        <a
-          class="contact-button"
-          href="tel:+998959334333"
-        >
-          📞 +998 95 933 43 33
-        </a>
-
+      <div class="payment-status-text">
+        Iltimos, kuting...
       </div>
 
     </div>
 
+
+    <button
+      class="modal-button close-button"
+      onclick="closeGiftModal()"
+    >
+      Yopish
+    </button>
+
   `
-}
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+  giftPaymentTimer = setInterval(() => {
 
-window.openStars = function() {
-  renderStars()
-}
+    giftPaymentSeconds--
 
 
-window.openGift = function() {
-  renderGift()
-}
-
-
-window.openProducer = function() {
-  renderProducer()
-}
-
-
-window.goHome = function() {
-  renderHome()
-}
-
-
-/* =====================================================
-   ADD TO CART
-===================================================== */
-
-window.addToCart = function(id) {
-
-  const product =
-    products.find(
-      item => item.id === id
-    )
-
-  if (!product) return
-
-
-  const existing =
-    cart.find(
-      item => item.id === id
-    )
-
-
-  if (existing) {
-
-    existing.quantity++
-
-  } else {
-
-    cart.push({
-
-      ...product,
-
-      quantity: 1
-
-    })
-
-  }
-
-
-  renderStars()
-}
-
-
-/* =====================================================
-   INCREASE
-===================================================== */
-
-window.increaseQuantity = function(id) {
-
-  const item =
-    cart.find(
-      item => item.id === id
-    )
-
-  if (item) {
-    item.quantity++
-  }
-
-  renderStars()
-}
-
-
-/* =====================================================
-   DECREASE
-===================================================== */
-
-window.decreaseQuantity = function(id) {
-
-  const item =
-    cart.find(
-      item => item.id === id
-    )
-
-  if (!item) return
-
-
-  if (item.quantity > 1) {
-
-    item.quantity--
-
-  } else {
-
-    cart =
-      cart.filter(
-        item => item.id !== id
+    const timerElement =
+      document.querySelector(
+        '#gift-payment-timer'
       )
 
-  }
+
+    if (!timerElement) {
+
+      clearInterval(
+        giftPaymentTimer
+      )
+
+      giftPaymentTimer = null
+
+      return
+
+    }
 
 
-  renderStars()
+    const minutes =
+      Math.floor(
+        giftPaymentSeconds / 60
+      )
+
+
+    const seconds =
+      giftPaymentSeconds % 60
+
+
+    timerElement.textContent =
+
+      `${String(minutes).padStart(2, '0')}:` +
+
+      `${String(seconds).padStart(2, '0')}`
+
+
+    if (giftPaymentSeconds <= 0) {
+
+      clearInterval(
+        giftPaymentTimer
+      )
+
+      giftPaymentTimer = null
+
+
+      timerElement.textContent =
+        '00:00'
+
+
+      modal.querySelector(
+        '.modal'
+      ).innerHTML = `
+
+        <h2>
+          ⌛ Vaqt tugadi
+        </h2>
+
+
+        <div class="payment-status-box">
+
+          <div class="payment-status-icon">
+            ⚠️
+          </div>
+
+
+          <div class="payment-status-title">
+            Tekshirish vaqti tugadi
+          </div>
+
+
+          <div class="payment-status-text">
+            Buyurtma oynasi yopildi.
+          </div>
+
+        </div>
+
+
+        <button
+          class="modal-button close-button"
+          onclick="closeGiftModal()"
+        >
+          Yopish
+        </button>
+
+      `
+
+    }
+
+  }, 1000)
+
 }
 
 
 /* =====================================================
-   REMOVE
+   MODALNI YOPISH
 ===================================================== */
 
-window.removeFromCart = function(id) {
+window.closeGiftModal = function() {
 
-  cart =
-    cart.filter(
-      item => item.id !== id
+  if (giftPaymentTimer) {
+
+    clearInterval(
+      giftPaymentTimer
     )
 
-  renderStars()
-}
-
-
-/* =====================================================
-   ORDER
-===================================================== */
-
-window.orderCart = function() {
-
-  if (cart.length === 0) {
-
-    showAlert(
-      'Savatcha bo‘sh 🛒'
-    )
-
-    return
+    giftPaymentTimer = null
 
   }
 
 
-  const total =
-    getCartTotal()
+  const modal =
+    document.querySelector(
+      '#gift-modal'
+    )
 
 
-  const user =
-    tg?.initDataUnsafe?.user
+  if (modal) {
 
-
-  const order = {
-
-    type: 'stars',
-
-    items: cart,
-
-    total: total,
-
-    userId: user?.id || '',
-
-    username: user?.username || '',
-
-    firstName: user?.first_name || ''
+    modal.remove()
 
   }
-
-
-  console.log(
-    'STARS BUYURTMA:',
-    order
-  )
-
-
-  showAlert(
-
-    `Buyurtma qabul qilindi ✅\n\n` +
-
-    `⭐ Stars: ${getCartCount()}\n` +
-
-    `💰 Jami: ${formatPrice(total)}`
-
-  )
 
 }
 
 
 /* =====================================================
-   START
+   START APP
 ===================================================== */
 
 function startApp() {
@@ -1447,7 +1549,7 @@ function startApp() {
 
     renderHome()
 
-  }, 500)
+  }, 1200)
 
 }
 
