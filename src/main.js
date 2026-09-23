@@ -1038,7 +1038,6 @@ window.decreaseCart = function(id) {
 /* =====================================================
    STARS BUYURTMASI
 ===================================================== */
-
 window.orderCart = async function() {
 
   if (cart.length === 0) {
@@ -1051,21 +1050,23 @@ window.orderCart = async function() {
 
   }
 
-
   const total = getCartTotal()
 
   const user =
     tg?.initDataUnsafe?.user
-
 
   const order = {
 
     type: 'stars',
 
     items: cart.map(item => ({
+
       name: item.name,
+
       price: item.price,
+
       quantity: item.quantity
+
     })),
 
     total: total,
@@ -1081,65 +1082,70 @@ window.orderCart = async function() {
 
   }
 
+  console.log(
+    'STARS BUYURTMA:',
+    order
+  )
 
   try {
 
     const response = await fetch(
-  '/api/order',
-  {
-    method: 'POST',
+      '/api/order',
+      {
 
-    headers: {
-      'Content-Type': 'application/json'
-    },
+        method: 'POST',
 
-    body: JSON.stringify(order)
-  }
-)
+        headers: {
 
+          'Content-Type':
+            'application/json'
+
+        },
+
+        body:
+          JSON.stringify(order)
+
+      }
+    )
 
     const result =
       await response.json()
 
+    console.log(
+      'ORDER API:',
+      result
+    )
 
     if (!response.ok || !result.ok) {
 
-      console.error(
-        'BUYURTMA XATOSI:',
-        result
-      )
-
       showAlert(
-        'Buyurtmani yuborishda xatolik yuz berdi ❌'
+        `Buyurtmani yuborishda xatolik ❌\n\n${result.message || 'Server xatosi'}`
       )
 
       return
 
     }
 
-
     showAlert(
 
-      `Buyurtma yuborildi ✅\n\n` +
+      `Buyurtma qabul qilindi ✅\n\n` +
 
       `⭐ Stars: ${getCartCount()}\n` +
 
-      `💰 Jami: ${formatPrice(total)}\n\n` +
-
-      `Tez orada siz bilan bog‘lanamiz.`
+      `💰 Jami: ${formatPrice(total)}`
 
     )
-
 
     cart = []
 
     renderStars()
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
-      'API xatosi:',
+      'ORDER ERROR:',
       error
     )
 
@@ -1150,6 +1156,428 @@ window.orderCart = async function() {
   }
 
 }
+/* =====================================================
+   GIFT BO‘LIMI
+===================================================== */
+
+window.openGift = function() {
+
+  renderGift()
+
+}
+
+
+function renderGift() {
+
+  app.innerHTML = `
+
+    <div class="shop">
+
+      <div class="shop-header">
+
+        <button
+          class="back-button"
+          onclick="goHome()"
+        >
+          ←
+        </button>
+
+        <h1>
+          🎁 Gift
+        </h1>
+
+      </div>
+
+
+      <div class="gifts">
+
+        ${gifts.map(gift => `
+
+          <div class="gift-card">
+
+            <div class="gift-image-box">
+
+              ${
+                gift.image
+
+                ? `
+                  <img
+                    class="gift-image"
+                    src="${gift.image}"
+                    alt="${gift.name}"
+                  >
+                `
+
+                : `
+                  <div
+                    style="
+                      font-size:70px;
+                    "
+                  >
+                    🎁
+                  </div>
+                `
+              }
+
+            </div>
+
+
+            <div class="gift-name">
+              ${gift.name}
+            </div>
+
+
+            <div class="gift-stars">
+              ⭐ ${gift.stars} Stars
+            </div>
+
+
+            <div class="gift-price">
+              💰 ${formatPrice(gift.price)}
+            </div>
+
+
+            <button
+              class="buy-button"
+              onclick="buyGift(${gift.id})"
+            >
+              🛒 Sotib olish
+            </button>
+
+          </div>
+
+        `).join('')}
+
+      </div>
+
+    </div>
+
+  `
+}
+
+
+/* =====================================================
+   GIFT TO‘LOV OYNASI
+===================================================== */
+
+let giftPaymentTimer = null
+
+let giftPaymentSeconds = 600
+
+
+window.buyGift = function(id) {
+
+  const gift = gifts.find(
+    item => item.id === id
+  )
+
+  if (!gift) return
+
+
+  const cardNumber =
+    '5614 6821 1064 4707'
+
+
+  app.insertAdjacentHTML(
+
+    'beforeend',
+
+    `
+
+      <div
+        class="modal-background"
+        id="gift-modal"
+      >
+
+        <div class="modal">
+
+          <h2>
+            🎁 ${gift.name}
+          </h2>
+
+
+          <div class="modal-subtitle">
+
+            ⭐ ${gift.stars} Stars
+
+            <br>
+
+            💰 ${formatPrice(gift.price)}
+
+          </div>
+
+
+          <div class="card-box">
+
+            <div class="card-label">
+              To‘lov uchun karta
+            </div>
+
+            <div class="card-number">
+              ${cardNumber}
+            </div>
+
+          </div>
+
+
+          <button
+            class="modal-button paid-button"
+            onclick="paymentDone(${gift.id})"
+          >
+            To‘lov qildim
+          </button>
+
+
+          <button
+            class="modal-button close-button"
+            onclick="closeGiftModal()"
+          >
+            Yopish
+          </button>
+
+        </div>
+
+      </div>
+
+    `
+  )
+
+}
+
+
+/* =====================================================
+   TO‘LOV QILDIM
+===================================================== */
+
+window.paymentDone = function(id) {
+
+  startGiftPaymentTimer(id)
+
+}
+
+
+/* =====================================================
+   10 DАQIQA TEKSHIRUV
+===================================================== */
+
+window.startGiftPaymentTimer = function(id) {
+
+  const gift = gifts.find(
+    item => item.id === id
+  )
+
+  if (!gift) return
+
+
+  const modal =
+    document.querySelector('#gift-modal')
+
+
+  if (!modal) return
+
+
+  if (giftPaymentTimer) {
+
+    clearInterval(
+      giftPaymentTimer
+    )
+
+  }
+
+
+  giftPaymentSeconds = 600
+
+
+  modal.querySelector(
+    '.modal'
+  ).innerHTML = `
+
+    <h2>
+      ⏳ To‘lov tekshirilmoqda
+    </h2>
+
+
+    <div class="modal-subtitle">
+
+      🎁 ${gift.name}
+
+      <br>
+
+      ⭐ ${gift.stars} Stars
+
+      <br>
+
+      💰 ${formatPrice(gift.price)}
+
+    </div>
+
+
+    <div class="payment-status-box">
+
+      <div class="payment-status-icon">
+        🔍
+      </div>
+
+
+      <div class="payment-status-title">
+        To‘lovingiz tekshirilmoqda
+      </div>
+
+
+      <div
+        class="payment-timer"
+        id="gift-payment-timer"
+      >
+        10:00
+      </div>
+
+
+      <div class="payment-status-text">
+        Iltimos, kuting...
+      </div>
+
+    </div>
+
+
+    <button
+      class="modal-button close-button"
+      onclick="closeGiftModal()"
+    >
+      Yopish
+    </button>
+
+  `
+
+
+  giftPaymentTimer = setInterval(() => {
+
+    giftPaymentSeconds--
+
+
+    const timerElement =
+      document.querySelector(
+        '#gift-payment-timer'
+      )
+
+
+    if (!timerElement) {
+
+      clearInterval(
+        giftPaymentTimer
+      )
+
+      giftPaymentTimer = null
+
+      return
+
+    }
+
+
+    const minutes =
+      Math.floor(
+        giftPaymentSeconds / 60
+      )
+
+
+    const seconds =
+      giftPaymentSeconds % 60
+
+
+    timerElement.textContent =
+
+      `${String(minutes).padStart(2, '0')}:` +
+
+      `${String(seconds).padStart(2, '0')}`
+
+
+    if (giftPaymentSeconds <= 0) {
+
+      clearInterval(
+        giftPaymentTimer
+      )
+
+      giftPaymentTimer = null
+
+
+      timerElement.textContent =
+        '00:00'
+
+
+      modal.querySelector(
+        '.modal'
+      ).innerHTML = `
+
+        <h2>
+          ⌛ Vaqt tugadi
+        </h2>
+
+
+        <div class="payment-status-box">
+
+          <div class="payment-status-icon">
+            ⚠️
+          </div>
+
+
+          <div class="payment-status-title">
+            Tekshirish vaqti tugadi
+          </div>
+
+
+          <div class="payment-status-text">
+            Buyurtma oynasi yopildi.
+          </div>
+
+        </div>
+
+
+        <button
+          class="modal-button close-button"
+          onclick="closeGiftModal()"
+        >
+          Yopish
+        </button>
+
+      `
+
+    }
+
+  }, 1000)
+
+}
+
+
+/* =====================================================
+   MODALNI YOPISH
+===================================================== */
+
+window.closeGiftModal = function() {
+
+  if (giftPaymentTimer) {
+
+    clearInterval(
+      giftPaymentTimer
+    )
+
+    giftPaymentTimer = null
+
+  }
+
+
+  const modal =
+    document.querySelector(
+      '#gift-modal'
+    )
+
+
+  if (modal) {
+
+    modal.remove()
+
+  }
+
+}
+
 
 /* =====================================================
    START APP
